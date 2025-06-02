@@ -1,0 +1,235 @@
+/* === Corps de la page === */
+body {
+  margin: 0;
+  padding: 0;
+  font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+  background-color: #2b2b2b;
+  color: #e0e0e0;
+}
+
+main {
+  max-width: 800px;
+  margin: 2rem auto;
+  padding: 2rem 1rem;
+  text-align: center;
+  background-color: #1e1e1e;
+  border-radius: 8px;
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.5);
+}
+
+/* === Titres === */
+h1, h2, h3 {
+  color: #f2f2f2;
+  margin: 0;
+}
+h1 {
+  font-size: 2.5rem;
+  margin-bottom: 1rem;
+}
+h2 {
+  font-size: 1.5rem;
+  margin-bottom: 0.75rem;
+}
+
+/* Styles des boutons améliorés  */
+.button {
+  display: inline-block;
+  padding: 0.6rem 1.2rem;
+  margin: 0.5rem;
+  background: linear-gradient(135deg, #5e35b1, #512da8);
+  color: #f2f2f2;
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+  font-size: 1rem;
+  font-weight: 500;
+  transition: background 0.3s ease, transform 0.1s ease, box-shadow 0.3s ease;
+  box-shadow: 0 6px 20px rgba(81, 45, 168, 0.4);
+  text-shadow: 0 1px 2px rgba(0, 0, 0, 0.3);
+}
+
+.button:hover {
+  background: linear-gradient(135deg, #6a1b9a, #4527a0);
+  transform: scale(1.05);
+  box-shadow: 0 8px 24px rgba(81, 45, 168, 0.5);
+}
+
+.button:active {
+  background: linear-gradient(135deg, #512da8, #4527a0);
+  transform: scale(0.97);
+  box-shadow: 0 4px 12px rgba(81, 45, 168, 0.3);
+}
+
+.button:disabled {
+  background: #3a3a3a;
+  color: #777;
+  cursor: default;
+  transform: none;
+  box-shadow: none;
+}
+
+
+/* === Styles des cartes === */
+.card-container {
+  width: 90px;
+  height: 90px;
+  margin: 6px;
+  perspective: 800px;
+  display: inline-block;
+  outline: none;
+  transition: transform 0.1s ease, box-shadow 0.1s ease;
+}
+.card-container:hover,
+.card-container:focus-visible {
+  transform: scale(1.08);
+  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.3);
+}
+.card-container:focus-visible {
+  outline: 3px solid #4a90e2;
+}
+
+.card-inner {
+  position: relative;
+  width: 100%;
+  height: 100%;
+  text-align: center;
+  transition: transform 0.4s ease, box-shadow 0.2s ease;
+  transform-style: preserve-3d;
+}
+.card-inner.flipped {
+  transform: rotateY(0deg);
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.5);
+}
+.card-inner.not-flipped {
+  transform: rotateY(180deg);
+}
+
+/* Animation “pop” pour les cartes matchées */
+@keyframes pop {
+  0% {
+    transform: scale(1);
+  }
+  50% {
+    transform: scale(1.15);
+  }
+  100% {
+    transform: scale(1);
+  }
+}
+.card-inner.matched {
+  animation: pop 0.3s ease-out;
+}
+
+/* Face avant (image) */
+.card-front {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  backface-visibility: hidden;
+  border-radius: 8px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background-color: #ffffff;
+  border: 2px solid #441e42;
+  transform: rotateY(0deg);
+}
+
+/* Face arrière (dos de carte) */
+.card-back {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  backface-visibility: hidden;
+  border-radius: 8px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background-color: #555;
+  transform: rotateY(180deg);
+}
+
+/* === Styles de la grille de cartes === */
+.memory-board {
+  display: grid;
+  gap: 12px;
+  justify-items: center;
+  align-items: center;
+  margin-top: 2rem;
+}
+
+/* === Styles de la modale === */
+@keyframes fadeInScale {
+  from {
+    opacity: 0;
+    transform: scale(0.9);
+  }
+  to {
+    opacity: 1;
+    transform: scale(1);
+  }
+}
+.modal-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(20, 20, 20, 0.8);
+  backdrop-filter: blur(3px);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 1000;
+  opacity: 0;
+  animation: fadeInScale 0.3s ease-out forwards;
+}
+
+.modal-content {
+  background-color: #1e1e1e;
+  border-radius: 10px;
+  padding: 2rem;
+  max-width: 90%;
+  width: 420px;
+  text-align: center;
+  box-shadow: 0 10px 28px rgba(0, 0, 0, 0.5);
+  opacity: 0;
+  transform: scale(0.9);
+  animation: fadeInScale 0.3s ease-out forwards;
+  animation-delay: 0.1s;
+}
+.modal-content h3 {
+  margin-top: 0;
+  margin-bottom: 1rem;
+  color: #f2f2f2;
+  font-size: 1.25rem;
+}
+.modal-content p {
+  margin-bottom: 1.5rem;
+  font-size: 1rem;
+  color: #cccccc;
+}
+.modal-actions {
+  display: flex;
+  justify-content: center;
+  gap: 1rem;
+  flex-wrap: wrap;
+}
+
+@media (max-width: 600px) {
+  .card-container {
+    width: 70px;
+    height: 70px;
+    margin: 4px;
+  }
+  .button {
+    font-size: 0.9rem;
+    padding: 0.4rem 0.8rem;
+  }
+  h1 {
+    font-size: 2rem;
+  }
+  h2 {
+    font-size: 1.25rem;
+  }
+}
